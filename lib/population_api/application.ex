@@ -12,7 +12,7 @@ defmodule PopulationApi.Application do
     children = [
       # Starts a worker by calling: PopulationApi.Worker.start_link(arg)
       # {PopulationApi.Worker, arg},
-      Plug.Adapters.Cowboy.child_spec(:http, PopulationApi.Router, [], [port: 4001]),
+      Plug.Adapters.Cowboy.child_spec(:http, PopulationApi.Router, [], [port: System.get_env("PORT") || 4001]),
       supervisor(PopulationApi.Repo, [])
     ]
 
