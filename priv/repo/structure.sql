@@ -42,6 +42,7 @@ CREATE TABLE cbsa_to_msa (
     cbsa character varying(6),
     mdiv character varying(255),
     lsad character varying(255),
+    name character varying(255),
     popestimate2014 integer,
     popestimate2015 integer
 );
