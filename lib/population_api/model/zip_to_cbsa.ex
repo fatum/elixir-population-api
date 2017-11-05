@@ -5,6 +5,7 @@ defmodule PopulationApi.Model.ZipToCbsa do
   import Ecto.Query
 
   @primary_key false
+  @table __MODULE__
 
   schema "zip_to_cbsa" do
     field :zip, :string
@@ -12,7 +13,7 @@ defmodule PopulationApi.Model.ZipToCbsa do
   end
 
   def find_by_zip(zip) do
-    (from u in __MODULE__, where: u.zip == ^zip) |> Repo.one
+    (from u in @table, where: u.zip == ^zip, limit: 1) |> Repo.one
   end
 
   def table_name do

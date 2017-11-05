@@ -1,12 +1,22 @@
 alias  PopulationApi.Model
 
 defmodule PopulationApi.Resolver.Population do
+  def resolve(""), do: {:error, "Zip not provided"}
   def resolve(zip) do
-    record = Model.CbsaToMsa.population(zip)
+    zip_record = Model.ZipToCbsa.find_by_zip(zip)
+
+    case zip_record do
+      nil -> {:error, "Not found"}
+      _   -> lookup_cbsa(zip_record)
+    end
+  end
+
+  defp lookup_cbsa(zip_record) do
+    record = Model.CbsaToMsa.population(zip_record.cbsa)
 
     case record do
-      nil -> {:error, ["Not found"]}
-      _   -> {:ok, build_response(zip, record)}
+      nil -> {:error, "Not found"}
+      _   -> {:ok, build_response(zip_record.zip, record)}
     end
   end
 
