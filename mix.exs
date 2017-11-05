@@ -29,6 +29,7 @@ defmodule PopulationApi.Mixfile do
       {:ecto, "~> 2.2.6"},
       {:postgrex, "~> 0.13.3"},
       {:csv, "~> 2.0.0"},
+      {:download, "~> 0.0.4"},
       {:exsync, "~> 0.2.1", only: :dev},
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
     ]

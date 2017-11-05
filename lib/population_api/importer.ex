@@ -5,15 +5,18 @@ defmodule PopulationApi.Importer do
   def execute(file), do: execute(file, @default_delimiter)
 
   def execute(file, delimiter) do
-    records = File.stream!(file, [:trim_bom]) |> Stream.flat_map(&split_chunk(&1, delimiter))
+    records = File.stream!(file, [:trim_bom]) |> split_lines(delimiter)
 
-    header  = records |> extract_header()
-    records |> batch(header)
+    header  = records |> Stream.take(1) |> extract_header()
+    records |> Stream.drop(1) |> batch(header)
+  end
+
+  defp split_lines(stream, delimiter) do
+    stream |> Stream.flat_map(&split_chunk(&1, delimiter))
   end
 
   defp extract_header(stream) do
     stream
-      |> Stream.take(1)
       |> Enum.to_list
       |> Enum.at(0)
       |> String.split(",")
@@ -21,7 +24,6 @@ defmodule PopulationApi.Importer do
 
   defp batch(stream, header) do
     stream
-      |> Stream.drop(1)
       |> Stream.reject(&validate(&1))
       |> Stream.chunk_every(@batch_size)
       |> Stream.map(&process_chunk(&1, header))
@@ -36,10 +38,10 @@ defmodule PopulationApi.Importer do
   end
 
   defp process_chunk(rows, headers) do
-    stream = rows |> CSV.decode() |> Enum.to_list
+    list = rows |> CSV.decode() |> Enum.to_list
 
     # Some rows failed at encoding, skip it...
-    records = Enum.reduce stream, [], fn(el, acc) ->
+    records = Enum.reduce list, [], fn(el, acc) ->
       case el do
         {:ok, el} -> [el | acc]
         _ -> acc

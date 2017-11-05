@@ -1,17 +1,18 @@
 defmodule Graphql.Types do
   use Absinthe.Schema.Notation
 
-  @desc "Prediction"
-  object :prediction do
+  @desc "Estimate"
+  object :estimate do
     field :year, :integer
-    field :prediction, :integer
+    field :estimate, :integer
   end
 
   @desc "Population"
   object :population do
     field :zip, :string
+    field :cbsa, :string
     field :msa, :string
 
-    field :predictions, list_of(:prediction)
+    field :estimates, list_of(:estimate)
   end
 end

@@ -5,7 +5,7 @@ config :logger,
 
 config :population_api, PopulationApi.Repo,
   adapter: Ecto.Adapters.Postgres,
-  url: "postgres://app@localhost/population-api-dev"
+  url: System.get_env("DATABASE_URL") || "postgres://app@localhost/population-api-dev"
 
 config :population_api, ecto_repos: [PopulationApi.Repo]
 

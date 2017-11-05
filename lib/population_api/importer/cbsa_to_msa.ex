@@ -22,6 +22,7 @@ defmodule PopulationApi.Importer.CbsaToMsa do
         cbsa: el["CBSA"],
         mdiv: el["MDIV"],
         lsad: el["LSAD"],
+        name: el["NAME"],
         popestimate2014: el["POPESTIMATE2014"] |> cast,
         popestimate2015: el["POPESTIMATE2015"] |> cast
       }

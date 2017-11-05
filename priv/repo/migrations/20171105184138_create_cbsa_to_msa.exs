@@ -6,6 +6,7 @@ defmodule PopulationApi.Repo.Migrations.CreateCbsaToMsa do
       add :cbsa, :string, size: 6
       add :mdiv, :string
       add :lsad, :string
+      add :name, :string
 
       add :popestimate2014, :integer
       add :popestimate2015, :integer

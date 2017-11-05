@@ -2,6 +2,7 @@
 
 Elixir example of Population API
 
+* Framework-less
 * GraphQL API
 * PostgreSQL
 * No-framework, plaing Plug-based solution (like rack)

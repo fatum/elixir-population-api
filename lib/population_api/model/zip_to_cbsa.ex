@@ -1,6 +1,6 @@
-defmodule PopulationApi.Model.ZipToCbsa do
-  alias PopulationApi.Repo
+alias PopulationApi.Repo
 
+defmodule PopulationApi.Model.ZipToCbsa do
   use Ecto.Schema
   import Ecto.Query
 

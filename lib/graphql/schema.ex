@@ -1,3 +1,5 @@
+alias PopulationApi.Resolver
+
 defmodule Graphql.Schema do
   use Absinthe.Schema
 
@@ -8,7 +10,7 @@ defmodule Graphql.Schema do
       arg :zip, non_null(:string)
 
       resolve fn %{zip: zip}, _ ->
-        {:ok, %{}}
+        Resolver.Population.resolve(zip)
       end
     end
   end
