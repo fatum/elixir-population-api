@@ -12,7 +12,7 @@ defmodule PopulationApi.Application do
     children = [
       # Starts a worker by calling: PopulationApi.Worker.start_link(arg)
       # {PopulationApi.Worker, arg},
-      Plug.Adapters.Cowboy.child_spec(:http, PopulationApi.Router, [], [port: System.get_env("PORT") || 4001]),
+      Plug.Adapters.Cowboy.child_spec(:http, PopulationApi.Router, [], [port: get_port()]),
       supervisor(PopulationApi.Repo, [])
     ]
 
@@ -31,5 +31,13 @@ defmodule PopulationApi.Application do
        {:error, :nofile} ->
          :ok
      end
+  end
+
+  defp get_port do
+    case System.get_env("PORT") do
+      ""    -> 4001
+      nil   -> 4001
+      port  -> String.to_integer(port)
+    end
   end
 end
